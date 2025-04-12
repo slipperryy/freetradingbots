@@ -1,0 +1,63 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="profit">total_profit</variable>
+    <variable id="stake">stake</variable>
+  </variables>
+  <block type="trade_definition_market" id="market" x="10" y="10">
+    <field name="MARKET_LIST">synthetic_index</field>
+    <field name="SUBMARKET_LIST">random_index</field>
+    <field name="SYMBOL_LIST">R_100</field>
+    <next>
+      <block type="trade_definition_trade_type" id="tradeType">
+        <field name="TRADETYPE_LIST">rise_fall</field>
+        <field name="TYPE_LIST">CALL</field>
+        <next>
+          <block type="trade_definition_contract_type" id="contractType">
+            <field name="DURATIONTYPE_LIST">t</field>
+            <field name="DURATION">1</field>
+            <next>
+              <block type="trade_definition_stake" id="stakeBlock">
+                <field name="AMOUNT">0.50</field>
+                <field name="CURRENCY">USD</field>
+                <next>
+                  <block type="trade_definition_set_profit" id="tp">
+                    <field name="PROFIT">4.50</field>
+                    <next>
+                      <block type="trade_definition_set_loss" id="sl">
+                        <field name="LOSS">1</field>
+                        <next>
+                          <block type="trade_definition_restart_on_error" id="restartError" />
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="before_purchase" id="decisionBlock" x="10" y="300">
+    <statement name="BEFORE_PURCHASE">
+      <block type="logic_if" id="checkTicks">
+        <value name="IF0">
+          <block type="logic_compare" id="compareTicks">
+            <field name="OP">GT</field>
+            <value name="A">
+              <block type="ticks" id="tickA" />
+            </value>
+            <value name="B">
+              <block type="ticks" id="tickB" />
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="trade" id="purchaseBlock" />
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
+
